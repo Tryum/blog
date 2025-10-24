@@ -1,6 +1,6 @@
 +++
 title = "What Makes Rust Unique"
-date = 2025-10-22
+date = 2025-10-27
 +++
 
 Every language has its perks and unique features, Rust stands out by achieving performance and safety !  
@@ -32,8 +32,10 @@ When you assign or pass values, ownership usually moves, not copies:
 ```rust
 let a = String::from("hi");
 let b = a; // a is moved into b
-// println!("{}", a); ❌ error: value boarrowed after move
+// println!("{}", a); ❌ error[E0382]: borrow of moved value: `a`
 ```
+
+[Link to Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=326265a029e71e9ea73585fd8f927ca5)
 
 For types that are `Copy` (mostly primitivees), Rust silently duplicates them instead of moving.  
 You can think of it as "cheap to copy" vs "must move".
@@ -45,14 +47,18 @@ You can think of it as "cheap to copy" vs "must move".
 Instead of transferring ownership, you can borrow data:
 
 ```rust
-fn gree(name: &String) {
+fn great(name: &String) {
     println!("Hello, {name}!");
 }
 
-let s = String::from("Alice");
-great(&s); // borrow s, don't move it
-println!("{}", s); // s still valid
+fn main() {
+    let s = String::from("Alice");
+    great(&s); // borrow s, don't move it
+    println!("{}", s); // s still valid
+}
 ```
+
+[Link to Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=1dc8a2b6b50fd98525b05893264a8149)
 
 References let you read or mutate data temporarily, while the compiler ensures you don't create conflicting mutable access.
 That's the borrow checker doing its job.
@@ -69,4 +75,3 @@ It's strict, sometimes frustrating, but once you internalize it, you start to se
 ---
 
 Next time: we'll reimplement `Option<T>` from scratch and see how enums power half of Rust's standard library!
-
