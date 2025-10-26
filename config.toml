@@ -10,11 +10,16 @@ build_search_index = true
 
 default_language = "en"
 author = "Thibault Jochem"
-title = "Thibault's Blog [EN]"
+title = "Thibault's Blog"
+description = "Tech learnings and discoveries"
+
+generate_feeds = true
+generate_sitemap = true
+generate_robots_txt = true
 
 [languages.fr]
-title = "Le Blog de Thibault [FR]"
-description = "Site description in French"
+title = "Le Blog de Thibault"
+description = "Découvertes et apprentissages tech"
 
 # Automatically generate a feed.
 build_search_index = true
@@ -52,7 +57,7 @@ name = "Tryum"
 
 # Profile bio.
 # Supports Markdown.
-bio = "Senior Software Engineer | Rust, C++, Cloud & DevOps "
+bio = "Senior Software Engineer | Rust, C++, Cloud & DevOps"
 
 # Social icons.
 # "name" should be the file name of "static/icons/*.svg" or
