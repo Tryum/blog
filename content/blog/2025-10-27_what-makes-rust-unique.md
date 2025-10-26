@@ -65,7 +65,7 @@ That's the borrow checker doing its job.
 
 ---
 
-## The Big Ideaa
+## The Big Idea
 
 Rust enforces who owns what and how long it lives, at compile time.
 This makes data races, use-after-free and dangling pointers impossible in safe Rust.
