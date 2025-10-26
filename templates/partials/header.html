@@ -1,0 +1,109 @@
+<!--
+	Custom header override for Linkita theme
+	- Replaces the default translations button with FR/EN flags (emoji)
+	- Current language is shown as a non-clickable flag; the other links to its translation
+	- To switch to SVG flags instead of emoji, place icons in `static/icons/` and replace the emoji spans/links
+-->
+<!-- Header -->
+{%- if config.extra.languages[lang].header_buttons is defined %}
+	{%- set header_buttons = config.extra.languages[lang].header_buttons %}
+{%- elif config.extra.header_buttons is defined %}
+	{%- set header_buttons = config.extra.header_buttons %}
+{%- else %}
+	{%- set header_buttons = ["site_title", "theme_button", "search_button", "translations_button"] %}
+{%- endif %}
+{%- if config.extra.languages[lang].header_menu_name %}
+	{%- if config.extra.menus[config.extra.languages[lang].header_menu_name] is defined %}
+		{%- set header_menu = config.extra.menus[config.extra.languages[lang].header_menu_name] %}
+	{%- else %}
+		{{- throw(message="The '" ~ config.extra.languages[lang].header_menu_name ~ "' menu is undefined!") }}
+	{%- endif %}
+{%- elif config.extra.header_menu_name %}
+	{%- if config.extra.menus[config.extra.header_menu_name] is defined %}
+		{%- set header_menu = config.extra.menus[config.extra.header_menu_name] %}
+	{%- else %}
+		{{- throw(message="The '" ~ config.extra.header_menu_name ~ "' menu is undefined!") }}
+	{%- endif %}
+{%- elif config.extra.menu %}
+	{%- set header_menu = config.extra.menu %}
+{%- endif %}
+<header class="{%
+	if config.extra.style.header_blur %}blur-header{% else %}header{% endif %} fixed top-0 z-40 mx-auto min-h-13 w-full header-icons">
+	<div class="mx-auto w-full max-w-4xl p-2.5 lg:flex lg:justify-between">
+		<div class="flex justify-between">
+			<div class="flex items-center min-h-8 overflow-hidden">
+				{%- for header_button in header_buttons %}
+					{%- if header_button == "site_title" and config.title %}
+				<a title="{{ m_i18n::tr(key=`act_go_to_home`, d=g_d) }}" accesskey="!"
+					href="{{ m_url::rel(there=m_url::get(url=`$BASE_URL/`), here=g_here, base=g_base) }}"
+					class="text-2xl font-semibold truncate">{{ config.title | truncate(length=32) }}</a>
+					{%- elif header_button == "home_button" or header_button == "site_title" %}
+				<button type="button" title="{{ m_i18n::tr(key=`act_go_to_home`, d=g_d) }}" accesskey="!"
+					onclick="window.location.href='{{ m_url::rel(there=m_url::get(url=`$BASE_URL/`), here=g_here, base=g_base) }}';"
+					class="btn-home h-6 w-6 shrink-0 cursor-pointer text-[0px] bg-center bg-no-repeat bg-cover [background-image:var(--icon-home)] dark:invert"
+				></button>
+					{%- elif header_button == "theme_button" %}
+				<button type="button" title="{{ m_i18n::tr(key=`act_switch_color_scheme`, d=g_d) }}" accesskey="$"
+					onclick="window.zolaTheme.color.toggle();"
+					class="btn-dark ml-4 h-6 w-6 shrink-0 cursor-pointer text-[0px]
+					bg-center bg-no-repeat bg-cover [background-image:var(--icon-theme-dark)] dark:[background-image:var(--icon-theme-light)] dark:invert"
+				></button>
+					{%- elif header_button == "search_button" and config.build_search_index %}
+				<button type="button" title="{{ m_i18n::tr(key=`act_search`, d=g_d) }}" accesskey="/"
+					onclick="window.zolaTheme.search.toggle();"
+					class="btn-search ml-4 h-6 w-6 shrink-0 cursor-pointer text-[0px] bg-center bg-no-repeat bg-cover [background-image:var(--icon-search)] dark:invert"
+				></button>
+					{%- elif header_button == "translations_button" and (page.translations or section.translations) %}
+				{# Replace default translations button with FR/EN flag links #}
+				{%- set page_translations = page.translations | default(value=section.translations) %}
+				<div class="ml-4 flex items-center gap-2">
+                    {%- for t in page_translations %}
+                        {%- if t.lang == "fr" and lang != "fr" %}
+                        <a href="{{ m_url::rel(there=t.permalink, here=g_here, base=g_base) }}" title="Français" class="hover:opacity-80">🇫🇷</a>
+                        {%- endif %}
+                        {%- if t.lang == "en" and lang != "en" %}
+                        <a href="{{ m_url::rel(there=t.permalink, here=g_here, base=g_base) }}" title="English" class="hover:opacity-80">🇬🇧</a>
+                        {%- endif %}
+                    {%- endfor %}
+				</div>
+					{%- endif %}
+				{%- endfor %}
+			</div>
+			{%- if header_menu %}
+			<div title="{{ m_i18n::tr(key=`act_menu`, d=g_d) }}" role="button" accesskey="+" tabindex="0"
+				class="btn-menu relative z-50 flex h-8 w-8 shrink-0 cursor-pointer select-none flex-col items-center justify-center gap-2.5 lg:hidden"
+				onclick="window.zolaTheme.menu.toggleHeader();"
+				onkeydown="(event.keyCode == 13 || event.keyCode == 32) ? event.preventDefault() || window.zolaTheme.menu.toggleHeader() : true;"
+			></div>
+			{%- endif %}
+		</div>
+		{%- if header_menu %}
+		<nav class="flex w-full items-center lg:w-auto">
+			<menu
+				class="nav-wrapper flex w-full flex-col py-2 lg:w-auto lg:flex-row lg:self-center lg:py-0">
+				{%- for menu in header_menu %}
+				<li>
+					<a
+						class="primary-link block py-2 text-center text-lg font-medium lg:px-3 lg:py-0"
+						href="{{ m_url::rel(there=m_url::get(url=menu.url), here=g_here, base=g_base) }}"
+					>{%
+							if menu.names_i18n is defined %}{{
+								throw(message=`'names_i18n' in menu is not supported anymore`) }}{% 
+							elif menu.names[lang] %}{{ menu.names[lang] }}{% 
+							elif config.extra.menu_i18n and lang != g_hreflang and g_menu_d[menu.name][g_hreflang] %}{{
+								g_menu_d[menu.name][g_hreflang] }}{% 
+							elif config.extra.menu_i18n and g_menu_d[menu.name][lang] %}{{
+								g_menu_d[menu.name][lang] }}{% 
+							elif menu.name %}{{ menu.name }}{% 
+							else %}{{ menu.url | replace(from=`$BASE_URL`, to=``) | escape_xml | safe }}{% endif %}</a>
+				</li>
+				{%- endfor %}
+			</menu>
+			<!-- Begin Header Nav inject -->
+			{% include "injects/header_nav.html" ignore missing %}
+			<!-- End Header Nav inject -->
+		</nav>
+		{%- endif %}
+	</div>
+</header>
+
