@@ -1,16 +1,73 @@
 # The URL the site will be built for
 base_url = "https://blog.thibault.jochem.fr"
+theme = "linkita"
 
 # Whether to automatically compile all Sass files in the sass directory
 compile_sass = true
 
 # Whether to build a search index to be used later on by a JavaScript library
-build_search_index = false
+build_search_index = true
+
+default_language = "en"
+author = "Thibault Jochem"
+title = "Thibault's Blog [EN]"
+
+[languages.fr]
+title = "Le Blog de Thibault [FR]"
+description = "Site description in French"
+
+# Automatically generate a feed.
+build_search_index = true
 
 [markdown]
 # Whether to do syntax highlighting
 # Theme can be customised by setting the `highlight_theme` variable to a theme supported by Zola
-highlight_code = false
+highlight_code = true
 
 [extra]
 # Put all your custom variables here
+theme = "linkita"
+
+# Enable KaTeX math formula support globally.
+math = true
+
+# Enable Mermaid support globally.
+mermaid = true
+
+# Enable comments globally.
+comment = true
+
+[extra.profiles.tryum]
+
+# The URL of avatar.
+# e.g. "icons/github.svg"
+avatar_url = "avat2024.jpg"
+
+# A description of what is in the avatar.
+avatar_alt = "Thibault at Hellfest"
+
+# Profile name.
+# Default value: the username
+name = "Tryum"
+
+# Profile bio.
+# Supports Markdown.
+bio = "Senior Software Engineer | Rust, C++, Cloud & DevOps "
+
+# Social icons.
+# "name" should be the file name of "static/icons/*.svg" or
+# the icon name of https://simpleicons.org/
+# "url" supports "$BASE_URL".
+# Other variables: "urls", "title", "titles".
+social = [
+    { name = "bluesky", url = "https://bsky.app/profile/tibs.fr" },
+    { name = "github", url = "https://github.com/Tryum" },
+    { name = "email", url = "mailto:thibault+blog@jochem.fr" },
+    { name = "rss", url = "$BASE_URL/atom.xml" },
+]
+
+[extra.giscus]
+repo = "Tryum/Blog"
+repo_id = "R_kgDOQHZqBQ"
+category = "General"
+category_id = "DIC_kwDOQHZqBc4CxDoX"
