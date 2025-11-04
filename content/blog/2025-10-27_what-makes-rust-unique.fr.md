@@ -1,13 +1,12 @@
 +++
 title = "Ce qui rend Rust unique"
-date = 2025-10-27
-draft = true
+date = 2025-11-04
 +++
 
 Chaque langage a ses atouts et ses particularités ; Rust se distingue en offrant à la fois performance et sécurité !
 Le compilateur, à la fois allié et exigeant, impose la propriété (ownership) et l’emprunt (borrowing) à la compilation ; vous obtenez ainsi la sûreté mémoire sans ramasse-miettes (garbage collector).
 
-Déballons tout ça en 5 minutes.
+Déballons tout ça en moins 5 minutes.
 
 ---
 
@@ -60,7 +59,7 @@ C’est le borrow checker qui fait son travail.
 
 ---
 
-## L’idée maîtresse
+## L’idée majeure
 
 Rust impose, à la compilation, qui possède quoi et combien de temps une valeur vit.
 Cela rend les data races, les use-after-free et les pointeurs pendants impossibles en Rust sûr.

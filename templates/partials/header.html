@@ -59,10 +59,10 @@
 				<div class="ml-4 flex items-center gap-2">
                     {%- for t in page_translations %}
                         {%- if t.lang == "fr" and lang != "fr" %}
-                        <a href="{{ m_url::rel(there=t.permalink, here=g_here, base=g_base) }}" title="Français" class="hover:opacity-80">🇫🇷</a>
+                        <a href="{{ m_url::rel(there=t.permalink, here=g_here, base=g_base) }}" title="Français" class="hover:opacity-80">🇬🇧 🇫🇷</a>
                         {%- endif %}
                         {%- if t.lang == "en" and lang != "en" %}
-                        <a href="{{ m_url::rel(there=t.permalink, here=g_here, base=g_base) }}" title="English" class="hover:opacity-80">🇬🇧</a>
+                        <a href="{{ m_url::rel(there=t.permalink, here=g_here, base=g_base) }}" title="English" class="hover:opacity-80">🇬🇧 🇫🇷</a>
                         {%- endif %}
                     {%- endfor %}
 				</div>

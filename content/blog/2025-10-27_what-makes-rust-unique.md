@@ -1,13 +1,12 @@
 +++
 title = "What Makes Rust Unique"
-date = 2025-10-27
-draft = true
+date = 2025-11-04
 +++
 
 Every language has its perks and unique features, Rust stands out by achieving performance and safety !  
 The compiler, friend and foe, enforces ownership and borrowing at compile time, so you get memory safety without a garbage collector.
 
-Let's unpack that in 5 minutes.
+Let's unpack that in less than 5 minutes.
 
 ---
 
@@ -36,8 +35,6 @@ let b = a; // a is moved into b
 // println!("{}", a); ❌ error[E0382]: borrow of moved value: `a`
 ```
 
-[Link to Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=326265a029e71e9ea73585fd8f927ca5)
-
 For types that are `Copy` (mostly primitivees), Rust silently duplicates them instead of moving.  
 You can think of it as "cheap to copy" vs "must move".
 
@@ -58,8 +55,6 @@ fn main() {
     println!("{}", s); // s still valid
 }
 ```
-
-[Link to Rust Playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2024&gist=1dc8a2b6b50fd98525b05893264a8149)
 
 References let you read or mutate data temporarily, while the compiler ensures you don't create conflicting mutable access.
 That's the borrow checker doing its job.

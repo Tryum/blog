@@ -18,7 +18,7 @@ generate_sitemap = true
 generate_robots_txt = true
 
 [languages.fr]
-title = "Le Blog de Thibault"
+title = "Thibault's Blog"
 description = "Découvertes et apprentissages tech"
 
 # Automatically generate a feed.
